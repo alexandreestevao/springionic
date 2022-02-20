@@ -1,7 +1,8 @@
 package com.alexandreestevao.springionic.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,7 +30,7 @@ public class Category implements Serializable {
 	
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categories", cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
-	private Set<Product> products = new HashSet<>();
+	private List<Product> products = new ArrayList<>();
 	
 	public Category() {		
 	}
@@ -55,7 +56,7 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Product> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 

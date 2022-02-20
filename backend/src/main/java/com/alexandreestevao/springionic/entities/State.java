@@ -1,9 +1,9 @@
 package com.alexandreestevao.springionic.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +24,7 @@ public class State implements Serializable {
 	private String name;
 	
 	@OneToMany(mappedBy = "state")
-	private Set<City> cities = new HashSet<>();
+	private List<City> cities = new ArrayList<>();
 	
 	public State() {		
 	}
@@ -51,7 +51,7 @@ public class State implements Serializable {
 		this.name = name;
 	}
 
-	public Set<City> getCities() {
+	public List<City> getCities() {
 		return cities;
 	}
 

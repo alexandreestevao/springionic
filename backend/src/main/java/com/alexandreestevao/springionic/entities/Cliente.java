@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.alexandreestevao.springionic.entities.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -25,6 +27,8 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -33,9 +37,14 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-//	@ElementCollection
+//	@ElementCollection(fetch=FetchType.EAGER)
 //	@CollectionTable(name="TELEFONE")
 //	private Set<String> telefones = new HashSet<>();	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 
 	public Cliente() {
 	}
@@ -45,7 +54,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = (tipo==null) ? null : tipo.getCod();
 	}
 
 	public Integer getId() {
@@ -96,8 +105,6 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 	
-	
-
 //	public Set<String> getTelefones() {
 //		return telefones;
 //	}
@@ -105,6 +112,14 @@ public class Cliente implements Serializable {
 //	public void setTelefones(Set<String> telefones) {
 //		this.telefones = telefones;
 //	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}	
 
 	@Override
 	public int hashCode() {
@@ -122,5 +137,7 @@ public class Cliente implements Serializable {
 		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
 
 }

@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alexandreestevao.springionic.dto.ProductDTO;
-import com.alexandreestevao.springionic.services.ProductService;
+import com.alexandreestevao.springionic.entities.Produto;
+import com.alexandreestevao.springionic.services.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/products")
-public class ProductController {
+@RequestMapping(value = "/produtos")
+public class ProdutoController {
 	
 	@Autowired
-	private ProductService service;
+	private ProdutoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<ProductDTO>> findAll() {
-		List<ProductDTO> list = service.findAll();
+	public ResponseEntity<List<Produto>> findAll() {
+		List<Produto> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 

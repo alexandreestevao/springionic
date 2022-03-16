@@ -1,7 +1,6 @@
 package com.alexandreestevao.springionic.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,26 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alexandreestevao.springionic.dto.CategoryDTO;
-import com.alexandreestevao.springionic.entities.Category;
-import com.alexandreestevao.springionic.services.CategoryService;
+import com.alexandreestevao.springionic.entities.Categoria;
+import com.alexandreestevao.springionic.services.CategoriaService;
 
 @RestController
-@RequestMapping(value = "/categories")
-public class CategoryController {
+@RequestMapping(value = "/categorias")
+public class CategoriaController {
 
 	@Autowired
-	private CategoryService service;
+	private CategoriaService service;
 
 	@GetMapping
-	public ResponseEntity<List<CategoryDTO>> findAll() {
-		List<CategoryDTO> list = service.findAll();
+	public ResponseEntity<List<Categoria>> findAll() {
+		List<Categoria> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(path = {"/{id}"})
-	public ResponseEntity<?> findById(@PathVariable long id){
-		Optional<Category> obj = service.findById(id);
+	public ResponseEntity<Categoria> findById(@PathVariable Integer id){
+		Categoria obj = service.findById(id);
 	   return ResponseEntity.ok().body(obj); 
 	}
 

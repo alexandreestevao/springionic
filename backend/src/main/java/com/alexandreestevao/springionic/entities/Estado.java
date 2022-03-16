@@ -10,51 +10,55 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "tb_state")
-public class State implements Serializable {
+public class Estado implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
+	private Integer id;
+	private String nome;
 	
-	@OneToMany(mappedBy = "state")
-	private List<City> cities = new ArrayList<>();
+	@JsonBackReference
+	@OneToMany(mappedBy="estado") 
+	private List<Cidade> cidades = new ArrayList<>(); 
 	
-	public State() {		
+	public Estado() {		
 	}
 
-	public State(Long id, String name) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public List<City> getCities() {
-		return cities;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
 
 	@Override
 	public int hashCode() {
@@ -69,9 +73,8 @@ public class State implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		State other = (State) obj;
+		Estado other = (Estado) obj;
 		return Objects.equals(id, other.id);
-	}
-	
+	}	
 	
 }

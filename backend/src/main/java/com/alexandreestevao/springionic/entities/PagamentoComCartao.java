@@ -1,13 +1,11 @@
 package com.alexandreestevao.springionic.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 
 import com.alexandreestevao.springionic.entities.enums.EstadoPagamento;
 
 @Entity
-public class PagamentoComCartao extends Pagamento implements Serializable {
+public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer numeroDeParcelas;

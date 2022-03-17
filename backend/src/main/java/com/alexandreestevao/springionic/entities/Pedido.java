@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,22 +17,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+	@JsonManagedReference
+	@OneToOne(mappedBy="pedido", cascade=CascadeType.ALL)
 	private Pagamento pagamento;
 
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
@@ -40,9 +45,10 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
 	
-	@OneToMany(mappedBy = "id.pedido")
+	@OneToMany(mappedBy="id.pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<ItemPedido> itens = new HashSet<>();
 	
+
 	public Pedido() {		
 	}
 
@@ -101,7 +107,7 @@ public class Pedido implements Serializable {
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}	
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -117,6 +123,8 @@ public class Pedido implements Serializable {
 			return false;
 		Pedido other = (Pedido) obj;
 		return Objects.equals(id, other.id);
-	}	
+	}
+
+	
 
 }

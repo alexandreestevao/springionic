@@ -7,29 +7,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alexandreestevao.springionic.entities.Produto;
-import com.alexandreestevao.springionic.services.ProdutoService;
+import com.alexandreestevao.springionic.entities.Pedido;
+import com.alexandreestevao.springionic.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/produtos")
-public class ProdutoController {
-	
+@RequestMapping(value = "/pedidos")
+public class PedidoController {
+
 	@Autowired
-	private ProdutoService service;
-	
+	private PedidoService service;
+
 	@GetMapping
-	public ResponseEntity<List<Produto>> findAll() {
-		List<Produto> list = service.find();
+	public ResponseEntity<List<Pedido>> findAll() {
+		List<Pedido> list = service.find();
 		return ResponseEntity.ok().body(list);
 	}
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Produto> find(@PathVariable Integer id) {
-		Produto obj = service.findById(id);
+
+	@GetMapping(path = {"/{id}"})
+	public ResponseEntity<Pedido> findById(@PathVariable Integer id) {
+		Pedido obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
-	}	
+	}
 
 }

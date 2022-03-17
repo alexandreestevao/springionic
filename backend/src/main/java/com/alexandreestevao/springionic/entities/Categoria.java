@@ -24,10 +24,9 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-
-	@JsonManagedReference
-	@ManyToMany(mappedBy="categorias", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<Produto> produtos = new ArrayList<>(); 
+	
+	@ManyToMany(mappedBy="categorias", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Produto> produtos = new ArrayList<>();
 	
 	public Categoria() {		
 	}
@@ -60,11 +59,6 @@ public class Categoria implements Serializable {
 
 	public List<Produto> getProdutos() {
 		return produtos;
-	}
-
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
 	}
 
 

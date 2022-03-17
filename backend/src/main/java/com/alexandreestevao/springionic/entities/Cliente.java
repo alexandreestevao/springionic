@@ -2,11 +2,15 @@ package com.alexandreestevao.springionic.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,9 +41,9 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
-//	@ElementCollection(fetch=FetchType.EAGER)
-//	@CollectionTable(name="TELEFONE")
-//	private Set<String> telefones = new HashSet<>();	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="TELEFONE")
+	private Set<String> telefones = new HashSet<>();	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
@@ -105,13 +109,13 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 	
-//	public Set<String> getTelefones() {
-//		return telefones;
-//	}
-//
-//	public void setTelefones(Set<String> telefones) {
-//		this.telefones = telefones;
-//	}
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
 	
 	public List<Pedido> getPedidos() {
 		return pedidos;
